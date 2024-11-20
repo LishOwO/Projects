@@ -20,6 +20,7 @@ class Game:
         self.movement_x = [False, False]
         self.movement_y = [False, False]
 
+        self.test = 0
 
     def run(self):
 
