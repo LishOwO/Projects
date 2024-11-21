@@ -66,17 +66,20 @@ class Game:
 
     def wall_collision(self, rectTarget, rectCollision):
         if not self.test_collision(rectTarget, rectCollision):
-            pass #do nothing
-        elif rectTarget.left - self.MOVEMENT_VELOCITY <= rectCollision.right and self.movement_x[0] == True:
+            pass # do nothing
+        elif rectTarget.left - self.MOVEMENT_VELOCITY <= rectCollision.right and self.movement_x[0]:
             self.movement_x[0] = False
-            self.player_pos[0] += 
-        elif rectTarget.right + self.MOVEMENT_VELOCITY >= rectCollision.left and self.movement_x[1] == True:
+            self.player_pos[0] = rectCollision.right
+        elif rectTarget.right + self.MOVEMENT_VELOCITY >= rectCollision.left and self.movement_x[1]:
             self.movement_x[1] = False
-        elif rectTarget.bottom + self.MOVEMENT_VELOCITY >= rectCollision.top and self.movement_y[0] == True:
+            self.player_pos[0] = rectCollision.left - rectTarget.width
+        elif rectTarget.bottom + self.MOVEMENT_VELOCITY >= rectCollision.top and self.movement_y[0]:
             self.movement_y[0] = False
-        elif rectTarget.top - self.MOVEMENT_VELOCITY <= rectCollision.bottom and self.movement_y[1] == True:
+            self.player_pos[1] = rectCollision.top - rectTarget.height
+        elif rectTarget.top - self.MOVEMENT_VELOCITY <= rectCollision.bottom and self.movement_y[1]:
             self.movement_y[1] = False
-            
+            self.player_pos[1] = rectCollision.bottom
+                
 
     def run(self):
 
