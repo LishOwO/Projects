@@ -27,16 +27,15 @@ class Game:
 
         self.test = 0
 
-    def test_collision(self, rectTested, rectTarget):
+    def test_collision(self, rectTarget, rectCollision):
 
-
-        if rectTarget.right < rectTested.left:
+        if rectTarget.right < rectCollision.left:
             return False
-        if rectTarget.bottom < rectTested.top:
+        if rectTarget.bottom < rectCollision.top:
             return False
-        if rectTarget.left > rectTested.right:
+        if rectTarget.left > rectCollision.right:
             return False
-        if rectTarget.top > rectTested.bottom:
+        if rectTarget.top > rectCollision.bottom:
             return False
 
         return True
@@ -65,31 +64,18 @@ class Game:
                 if event.key == pygame.K_RIGHT:
                     self.movement_x[1] = False
 
-    def collision_handling(self, rectTarget, rectCollision):
+    def wall_collision(self, rectTarget, rectCollision):
         if not self.test_collision(rectTarget, rectCollision):
             pass #do nothing
-        elif rectTarget.left - self.MOVEMENT_VELOCITY < rectTested.right:
+        elif rectTarget.left - self.MOVEMENT_VELOCITY <= rectCollision.right and self.movement_x[0] == True:
             self.movement_x[0] = False
-        elif rectTarget.right + self.MOVEMENT_VELOCITY > rectTested.left:
+            self.player_pos[0] += 
+        elif rectTarget.right + self.MOVEMENT_VELOCITY >= rectCollision.left and self.movement_x[1] == True:
             self.movement_x[1] = False
-        elif rectTarget.bottom + self.MOVEMENT_VELOCITY > rectTested.top :
+        elif rectTarget.bottom + self.MOVEMENT_VELOCITY >= rectCollision.top and self.movement_y[0] == True:
             self.movement_y[0] = False
-        elif rectTarget.top - self.MOVEMENT_VELOCITY > rectTested.bottom :
+        elif rectTarget.top - self.MOVEMENT_VELOCITY <= rectCollision.bottom and self.movement_y[1] == True:
             self.movement_y[1] = False
-
-        if rectTarget.bottom < rectTested.top:
-            return False
-        
-        if rectTarget.left > rectTested.right:
-            return False
-        
-        if rectTarget.top > rectTested.bottom:
-            return False
-        
-        
-        
-        
-        
             
 
     def run(self):
@@ -98,8 +84,10 @@ class Game:
             self.screen.fill((0,0,0))
 
             self.movement()
+            self.wall_collision(self.player,self.collision)
 
-            print(self.collision_handling(self.player, self.collision))
+
+            print(self.movement_x, self.movement_y)
 
             self.player_pos[0] += (self.movement_x[1] - self.movement_x[0]) * self.MOVEMENT_VELOCITY
             self.player_pos[1] += (self.movement_y[1] - self.movement_y[0]) * self.MOVEMENT_VELOCITY
